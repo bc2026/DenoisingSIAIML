@@ -1,3 +1,5 @@
+import os
+
 """
 Configuration parameters for the denoising and particle tracking system.
 """
@@ -19,3 +21,20 @@ ANALYZE_MODE = "track"  # Options: "track", "analyze", etc.
 # Camera parameters
 EXPOSURE_TIME = 0.100  # seconds
 PIXEL_SIZE = 0.065  # microns
+
+
+def directory_setup(stackPath, stackFile, particleID, startColX, startRowY, X, Y):
+    print("directory_setup function is being called!")
+    saveID = os.path.splitext(stackFile)[0]
+    savingPath = f'{stackPath}/Process/Particle {particleID}/'
+
+    # Ensure directory exists
+    if not os.path.isdir(savingPath):
+        os.makedirs(savingPath)
+
+    # Assign values after ensuring the directory exists
+    saveBaseName = f'{savingPath}{saveID}_Particle{particleID}_FRAME_RANGE{FRAME_RANGE}_X{startColX}_Y{startRowY}'
+    saveBaseNameMovie = f'{savingPath}{saveID}_FRAME_RANGE{FRAME_RANGE}'
+    save_base_name = f'{savingPath}{saveID}_Particle{particleID}_frameRange{FRAME_RANGE}_X{X}_Y{Y}'
+
+    return saveBaseName, saveBaseNameMovie, save_base_name
